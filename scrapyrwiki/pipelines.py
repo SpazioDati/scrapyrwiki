@@ -45,7 +45,7 @@ class ScraperWikiPipeline(object):
         )
         scraperwiki.sqlite.save(
             table_name=table_name,
-            unique_keys=unique_keys,
+            unique_keys=unique_keys[item_type],
             data=self.data[item_type]
         )
         self.data[item_type] = []
