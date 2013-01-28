@@ -25,7 +25,7 @@ class ScraperWikiPipeline(object):
         dispatcher.connect(self.spider_closed, signals.spider_closed)
 
     def process_item(self, item, spider):
-        item_type = item.__class__.__name__
+        item_type = item.__name__
         self.data[item_type].append(dict(item))
         if len(self.data[item_type]) >= self.buff:
             self.write_data(spider, item_type)
