@@ -17,6 +17,8 @@ setup(
     version="0.1",
     description='A collection of helpers for running Scrapy in ScraperWiki',
     url='http://github.com/SPazioDati/scrapyrwiki',
+    author='SpazioDati',
+    author_email='hello@spaziodati.eu',
     packages=['scrapyrwiki'],
     zip_safe=True,
     license='BSD',
