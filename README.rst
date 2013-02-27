@@ -67,3 +67,11 @@ launched there must be a scrapy.cfg (needed by Scrapy to identify that's a scrap
 directory) and a .scrapy directory with the HTTP cache db.
 
 The output is in XUnit format, tested on `Jenkins <http://jenkins-ci.org>`_
+
+
+Log scraper errors to Sentry
+----------------------------
+
+Install `scrapy-sentry <https://github.com/llonchj/scrapy-sentry>`_ and set the
+environment variable SENTRY_DSN with the Sentry key. Scrapyrwiki will handle
+everything for you.
