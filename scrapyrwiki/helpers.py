@@ -10,10 +10,13 @@ def run_spider(spider, settings, loglevel='INFO'):
     """
     if 'SENTRY_DSN' in os.environ:
         import scrapy_sentry
-        scrapy_sentry.init(os.environ['SENTRY_DSN'])
         settings.overrides.update({
-            'SENTRY_SIGNALS': ['spider_error']
+            'SENTRY_DSN': os.environ['SENTRY_DSN'],
+            'EXTENSIONS': {
+                "scrapy_sentry.extensions.Errors": 10,
+            },
         })
+
     crawler = CrawlerProcess(settings)
     crawler.install()
     crawler.configure()
