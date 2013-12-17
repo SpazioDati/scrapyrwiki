@@ -17,9 +17,7 @@ def run_spider(spider, settings, loglevel='INFO'):
             },
         })
 
-    crawler = CrawlerProcess(settings)
-    crawler.install()
-    crawler.configure()
+    crawler_process = CrawlerProcess(settings)
+    crawler = crawler_process.create_crawler()
     crawler.crawl(spider)
-    log.start(loglevel=loglevel)
-    crawler.start()
+    crawler_process.start()
