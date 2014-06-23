@@ -86,7 +86,7 @@ class CreatedModifiedPipeline(ScraperWikiPipeline):
 
             item['created'] = item_in_database[0]['created']
 
-        except (sqlite.SqliteError, IndexError):
+        except (sqlite.SqliteError, IndexError, KeyError):
             item['created'] = item['modified'] = datetime.utcnow()
 
         return item
