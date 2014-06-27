@@ -14,7 +14,7 @@ long_description = open('README.rst').read()
 
 setup(
     name='scrapyrwiki',
-    version="0.2",
+    version='0.3',
     description='A collection of helpers for running Scrapy in ScraperWiki',
     url='http://github.com/SpazioDati/scrapyrwiki',
     author='SpazioDati',
