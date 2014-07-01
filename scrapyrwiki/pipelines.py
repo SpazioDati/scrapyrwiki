@@ -71,7 +71,7 @@ class CreatedModifiedPipeline(ScraperWikiPipeline):
 
     def update_item(self, item, item_type, unique_keys, table_name):
     	now = datetime.utcnow()
-        where = ' '.join([("%s = '%s'" % (ukey, item[ukey]))
+        where = ' and '.join([("%s = '%s'" % (ukey, item[ukey]))
             for ukey in unique_keys[item_type]])
         sqlquery = "* from %s where %s" % (table_name, where)
         
