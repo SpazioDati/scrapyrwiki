@@ -70,6 +70,7 @@ class CreatedModifiedPipeline(ScraperWikiPipeline):
     """
 
     def update_item(self, item, item_type, unique_keys, table_name):
+    	now = datetime.utcnow()
         where = ' '.join([("%s = '%s'" % (ukey, item[ukey]))
             for ukey in unique_keys[item_type]])
         sqlquery = "* from %s where %s" % (table_name, where)
@@ -81,13 +82,16 @@ class CreatedModifiedPipeline(ScraperWikiPipeline):
                 if key not in ['created', 'modified'] 
             } # because the item to be saved doesn't have these fields
 
-            item['modified'] = (datetime.utcnow() if item != saved_item
-                else item_in_database[0]['modified'])
+            item['modified'] = (item_in_database[0]['modified']
+                if item == saved_item and item_in_database[0]['modified']
+                else now)
 
-            item['created'] = item_in_database[0]['created']
+            item['created'] = (item_in_database[0]['created']
+                if item_in_database[0]['created']
+                else now)
 
         except (sqlite.SqliteError, IndexError, KeyError):
-            item['created'] = item['modified'] = datetime.utcnow()
+            item['created'] = item['modified'] = now
 
         return item
 
@@ -101,4 +105,3 @@ class CreatedModifiedPipeline(ScraperWikiPipeline):
             for item in self.data[item_type]]
 
         super(CreatedModifiedPipeline, self).write_data(spider, item_type)
-
