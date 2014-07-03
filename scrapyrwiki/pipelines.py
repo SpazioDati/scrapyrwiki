@@ -5,6 +5,8 @@ from scrapy import signals
 from scraperwiki import sqlite
 from datetime import datetime
 
+import logging
+
 def gen_table_name(item_type):
     table_name = item_type.lower()
     if table_name.endswith("item") and len(table_name) > 4:
@@ -101,7 +103,13 @@ class CreatedModifiedPipeline(ScraperWikiPipeline):
             'SW_UNIQUE_KEYS', {item_type: ['id']}
         )
 
-        self.data[item_type] = [self.update_item(item, item_type, unique_keys, table_name)
-            for item in self.data[item_type]]
+        updated = []
+        for item in self.data[item_type]:
+            try:
+                updated_item =  self.update_item(item, item_type, unique_keys, table_name)
+                updated.append(updated_item)
+            except Exception as ex: 
+                logging.exception('Pipeline error processing item %s' % str(item))
 
+        self.data[item_type] = updated
         super(CreatedModifiedPipeline, self).write_data(spider, item_type)
