@@ -81,11 +81,16 @@ class CreatedModifiedPipeline(ScraperWikiPipeline):
             item_in_database = sqlite.select(sqlquery)
             saved_item = { key: value
                 for key, value in item_in_database[0].iteritems()
-                if key not in ['created', 'modified'] 
+                if value and key not in ['created', 'modified'] 
             } # because the item to be saved doesn't have these fields
 
+            current_item = { key: value
+                for key, value in item.iteritems()
+                if value
+            } # ignoring blank/Nones etc.
+
             item['modified'] = (item_in_database[0]['modified']
-                if item == saved_item and item_in_database[0]['modified']
+                if current_item == saved_item and item_in_database[0]['modified']
                 else now)
 
             item['created'] = (item_in_database[0]['created']
