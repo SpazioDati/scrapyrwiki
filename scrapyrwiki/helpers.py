@@ -10,7 +10,7 @@ def run_spider(spider, settings, loglevel='INFO'):
     """
     if 'SENTRY_DSN' in os.environ:
         import scrapy_sentry
-        settings.overrides.update({
+        settings.setdict({
             'SENTRY_DSN': os.environ['SENTRY_DSN'],
             'EXTENSIONS': {
                 "scrapy_sentry.extensions.Errors": 10,
