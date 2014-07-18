@@ -51,6 +51,9 @@ class ScraperWikiPipeline(object):
         )
         self.data[item_type] = []
 
+    def open_spider(self, spider):
+        self.buff = spider.settings.get('SW_SAVE_BUFFER', 20)
+
 class CreatedModifiedPipeline(ScraperWikiPipeline):
     """
     This pipeline extends ScraperWikiPipeline adding a created and a modified
